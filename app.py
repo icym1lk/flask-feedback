@@ -34,9 +34,20 @@ def homepage():
 
     return redirect("/register")
 
-@app.route("/register")
+@app.route("/register", methods=["GET", "POST"])
 def register():
     """register User for site"""
 
     form = AddUserForm()
+    if form.validate_on_submit():
+        data = {k: v for k, v in form.data.items() if k != "csrf_token"}
+        user = User(**data)
+
+        db.session.add(user)
+        db.session.commit()
+        return redirect("/secret")
     return render_template("register.html", form=form)
+
+@app.route("/secret")
+def secret_route():
+    return render_template("secret.html")
