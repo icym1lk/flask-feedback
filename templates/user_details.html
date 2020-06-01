@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}User Details{% endblock %}
+
+{% block content %}
+
+<h1 class="display-1">Hello {{ user.username }}</h1>
+<p class="lead">Any of this info interest you?</p>
+{% for u in user %}
+    {{u.username}}
+    {{u.email}}
+    {{u.first_name}}
+    {{u.last_name}}
+{% endfor %}
+
+
+{% endblock %}}
