@@ -4,14 +4,12 @@
 
 {% block content %}
 
-<div class="container">
-    <h1 class="display-1">Login</h1>
-    <p class="lead">Don't have an account? <a href="/register">Register here</a></p>
-    <form>
-        {% include "_form.html" %}
-        <button class="btn btn-primary" formmethod="POST">Login</button>
-        <!-- <button class="btn btn-outline-secondary" formaction="/" formmethod="GET">Cancel</button> -->
-    </form>
-</div>
+<h1 class="display-1">Login</h1>
+<p class="lead">Don't have an account? <a href="/register">Register here</a></p>
+<form>
+    {% include "_form.html" %}
+    <button class="btn btn-primary" formmethod="POST">Login</button>
+    <!-- <button class="btn btn-outline-secondary" formaction="/" formmethod="GET">Cancel</button> -->
+</form>
 
 {% endblock %}}

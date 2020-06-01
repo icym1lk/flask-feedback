@@ -58,8 +58,12 @@ def login():
         data = {k: v for k, v in form.data.items() if k != "csrf_token"}
         user = User.authenticate(**data)
 
-        flash("Logged in!")
-        return redirect("/secret")
+        if user:
+            flash("Logged in!")
+            return redirect("/secret")
+        else:
+            form.username.errors = ["Invalid username or password"]
+            
     return render_template("login.html", form=form)
 
 @app.route("/secret")
