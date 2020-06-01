@@ -38,4 +38,5 @@ def homepage():
 def register():
     """register User for site"""
 
-    return render_template("register.html")
+    form = AddUserForm()
+    return render_template("register.html", form=form)
