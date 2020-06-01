@@ -45,6 +45,7 @@ def register():
 
         db.session.add(new_user)
         db.session.commit()
+        flash("Welcome! Your account was successfully created!")
         return redirect("/secret")
     return render_template("register.html", form=form)
 
@@ -55,8 +56,9 @@ def login():
     form = LoginUserForm()
     if form.validate_on_submit():
         data = {k: v for k, v in form.data.items() if k != "csrf_token"}
-        user = User(**data)
+        user = User.authenticate(**data)
 
+        flash("Logged in!")
         return redirect("/secret")
     return render_template("login.html", form=form)
 
