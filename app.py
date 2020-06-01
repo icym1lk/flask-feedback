@@ -3,7 +3,7 @@ from flask import Flask, request, jsonify, render_template, redirect, flash, ses
 # get db related stuff from models.py
 from models import db, connect_db, User
 # get forms from forms.py
-from forms import RegisterUserForm, LoginUserForm
+from forms import UserDetailsForm, LoginUserForm
 
 # instantiate and instance of Flask. app is standard name
 app = Flask(__name__)
@@ -38,7 +38,7 @@ def homepage():
 def register():
     """register User for site"""
 
-    form = RegisterUserForm()
+    form = UserDetailsForm()
     if form.validate_on_submit():
         data = {k: v for k, v in form.data.items() if k != "csrf_token"}
         new_user = User.register(**data)
@@ -76,8 +76,10 @@ def user_details(username):
         flash("Please log in first.", "info")
         return redirect("/login")
 
-    user = User.query.filter_by(username=username)
-    return render_template("user_details.html", user=user)
+    
+    user = User.query.filter_by(username=username).first()
+    form = UserDetailsForm(obj=user)
+    return render_template("user_details.html", form=form, user=user)
 
 @app.route("/logout")
 def logout():

@@ -6,12 +6,10 @@
 
 <h1 class="display-1">Hello {{ user.username }}</h1>
 <p class="lead">Any of this info interest you?</p>
-{% for u in user %}
-    {{u.username}}
-    {{u.email}}
-    {{u.first_name}}
-    {{u.last_name}}
-{% endfor %}
-
+<form>
+    {% include "_form.html" %}
+    <button class="btn btn-primary" formmethod="POST">Save Changes</button>
+    <!-- <button class="btn btn-outline-secondary" formaction="/" formmethod="GET">Cancel</button> -->
+</form>
 
 {% endblock %}}
