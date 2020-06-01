@@ -2,7 +2,7 @@
 
 Exercise during my Springboard Software Engineer Bootcamp
 
-Practice with flask-bcrypt, Autherization, and Authentication
+Practice with flask-bcrypt, Authorization, and Authentication
 
 In this exercise, we’ll be creating an application that lets users sign up and log in to their own accounts. 
 Once logged in, users can add feedback, edit their feedback, delete their feedback, and see a list of all feedback that they’ve given. 
