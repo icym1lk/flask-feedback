@@ -10,7 +10,14 @@
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
-    <div class="container-fluid">
+    <div class="navbar navbar-light bg-secondary justify-content-between">
+          <div class="navbar-brand"><a class="text-white" href="/">Flask Feedback</a></div>
+          <form class="form-inline">
+            <a class="nav-link text-white" href="/login">Login</a>
+          </form>
+    </div>
+  
+    <div class="container" style="margin-top: 2em">
         <main>
             {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
