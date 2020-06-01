@@ -3,7 +3,7 @@ from flask import Flask, request, jsonify, render_template, redirect, flash, ses
 # get db related stuff from models.py
 from models import db, connect_db, User
 # get forms from forms.py
-from forms import RegisterUserForm
+from forms import RegisterUserForm, LoginUserForm
 
 # instantiate and instance of Flask. app is standard name
 app = Flask(__name__)
@@ -47,6 +47,18 @@ def register():
         db.session.commit()
         return redirect("/secret")
     return render_template("register.html", form=form)
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    """login User to site"""
+
+    form = LoginUserForm()
+    if form.validate_on_submit():
+        data = {k: v for k, v in form.data.items() if k != "csrf_token"}
+        user = User(**data)
+
+        return redirect("/secret")
+    return render_template("login.html", form=form)
 
 @app.route("/secret")
 def secret_route():
