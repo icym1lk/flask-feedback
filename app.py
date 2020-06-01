@@ -27,3 +27,15 @@ app.config["SECRET_KEY"] = "secret"
 app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = False
 # instantiate class on our app
 debug = DebugToolbarExtension(app)
+
+@app.route("/")
+def homepage():
+    """homepage route. redirects to /register"""
+
+    return redirect("/register")
+
+@app.route("/register")
+def register():
+    """register User for site"""
+
+    return render_template("register.html")
