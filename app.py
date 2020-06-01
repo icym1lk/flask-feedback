@@ -74,3 +74,9 @@ def secret_route():
         flash("Please log in first.", "info")
         return redirect("/login")
     return render_template("secret.html")
+
+@app.route("/logout")
+def logout():
+    flash(f'Goodbye {session["username"]}', "success")
+    session.pop("username")
+    return redirect("/")
