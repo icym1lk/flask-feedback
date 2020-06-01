@@ -2,8 +2,8 @@
 from flask import Flask, request, jsonify, render_template, redirect, flash, session
 # get db related stuff from models.py
 from models import db, connect_db, User
-# get forms from forms.py
-# from forms import AddPetForm, EditPetForm
+get forms from forms.py
+from forms import AddUserForm
 
 # instantiate and instance of Flask. app is standard name
 app = Flask(__name__)
