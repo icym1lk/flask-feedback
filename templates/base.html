@@ -25,7 +25,6 @@
     </nav>
   
     <div class="container" style="margin-top: 2em">
-        <main>
             {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
             <section class="messages">
@@ -44,7 +43,6 @@
             {% endif %}
             {% endwith %}
             {% block content %}{% endblock %}
-        </main>
     </div>
     <!-- Bootstrap -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
