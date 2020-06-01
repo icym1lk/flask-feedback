@@ -1,0 +1,29 @@
+# import Flask and any libraries you want to use
+from flask import Flask, request, jsonify, render_template, redirect, flash, session
+# get db related stuff from models.py
+from models import db, connect_db
+# get forms from forms.py
+# from forms import AddPetForm, EditPetForm
+
+# instantiate and instance of Flask. app is standard name
+app = Flask(__name__)
+
+# specify which RDBMS you're using (i.e. postgresql) and name of DB you want app to use. "postgresql://ownername:yourpassword@localhost/databasename" OR "postgresql:///databasename"
+# must do before you associate to your app or else it will error out
+app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql:///feedback_db"
+# remove track modifications warning at startup
+app.config["SQLALCHEMY_TRACKMODIFICATIONS"] = False
+# print all SQL statements to terminal (helpful in debugging and learning the ORM method calls)
+app.config["SQLALCHEMY_ECHO"] = True
+
+# connect to db
+connect_db(app)
+
+# import debug toolbar
+from flask_debugtoolbar import DebugToolbarExtension
+# required by debugtoolbar for debugging session
+app.config["SECRET_KEY"] = "secret"
+# makes sure redirects aren't stopped by the debugtoolbar
+app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = False
+# instantiate class on our app
+debug = DebugToolbarExtension(app)
