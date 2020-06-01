@@ -79,13 +79,6 @@ def user_details(username):
     user = User.query.filter_by(username=username)
     return render_template("user_details.html", user=user)
 
-@app.route("/secret")
-def secret_route():
-    if "username" not in session:
-        flash("Please log in first.", "info")
-        return redirect("/login")
-    return render_template("secret.html")
-
 @app.route("/logout")
 def logout():
     flash(f'Goodbye {session["username"]}', "success")
