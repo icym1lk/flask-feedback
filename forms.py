@@ -4,8 +4,8 @@ from wtforms.fields.html5 import EmailField
 from wtforms.validators import InputRequired, Email, Length
 import email_validator
 
-class AddUserForm(FlaskForm):
-    """Form for adding users."""
+class RegisterUserForm(FlaskForm):
+    """Form for registering users."""
 
     username = StringField("Username", validators=[InputRequired(), Length(max=20, message="Must be 20 characters or less")])
     password = PasswordField("Password", validators=[InputRequired()])

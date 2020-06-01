@@ -3,7 +3,7 @@ from flask import Flask, request, jsonify, render_template, redirect, flash, ses
 # get db related stuff from models.py
 from models import db, connect_db, User
 # get forms from forms.py
-from forms import AddUserForm
+from forms import RegisterUserForm
 
 # instantiate and instance of Flask. app is standard name
 app = Flask(__name__)
@@ -38,7 +38,7 @@ def homepage():
 def register():
     """register User for site"""
 
-    form = AddUserForm()
+    form = RegisterUserForm()
     if form.validate_on_submit():
         data = {k: v for k, v in form.data.items() if k != "csrf_token"}
         user = User(**data)
