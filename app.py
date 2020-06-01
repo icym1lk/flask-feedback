@@ -1,7 +1,7 @@
 # import Flask and any libraries you want to use
 from flask import Flask, request, jsonify, render_template, redirect, flash, session
 # get db related stuff from models.py
-from models import db, connect_db, User
+from models import db, connect_db, User, Feedback
 # get forms from forms.py
 from forms import UserDetailsForm, LoginUserForm
 
