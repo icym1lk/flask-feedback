@@ -14,12 +14,18 @@
         <div class="container">
             <a class="navbar-brand text-light" href="/">Flask Feedback</a>
             <ul class="nav navbar-nav flex-row float-right">
+                {% if session["username"] %}
+                <li class="nav-item">
+                    <a href="/logout" class="nav-link pr-3 text-light">Logout</a>
+                </li>
+                {% else %}
                 <li class="nav-item">
                     <a href="/login" class="nav-link pr-3 text-light">Login</a>
                 </li>
                 <li class="nav-item">
                     <a href="/register" class="nav-link text-light">Register</a>
                 </li>
+                {% endif %}
             </ul>
         </div>
     </nav>

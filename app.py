@@ -48,6 +48,7 @@ def register():
         session["username"] = new_user.username
         flash("Welcome! Your account was successfully created!", "success")
         return redirect("/secret")
+
     return render_template("register.html", form=form)
 
 @app.route("/login", methods=["GET", "POST"])
