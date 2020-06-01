@@ -38,6 +38,9 @@ def homepage():
 def register():
     """register User for site"""
 
+    if "username" in session:
+        return redirect(f'/users/{session["username"]}')
+
     form = UserDetailsForm()
     if form.validate_on_submit():
         data = {k: v for k, v in form.data.items() if k != "csrf_token"}
@@ -55,6 +58,9 @@ def register():
 def login():
     """login User to site"""
 
+    if "username" in session:
+        return redirect(f'/users/{session["username"]}')
+        
     form = LoginUserForm()
     if form.validate_on_submit():
         data = {k: v for k, v in form.data.items() if k != "csrf_token"}
