@@ -27,6 +27,8 @@ class User(db.Model):
     first_name = db.Column(db.String(30), nullable = False)
     last_name = db.Column(db.String(30), nullable = False)
 
+    feedback = db.relationship('Feedback', backref='user', cascade='all, delete-orphan')
+
     @classmethod
     def register(cls, username, password, email, first_name, last_name):
         """Register username with hashed pwd & return user."""
@@ -56,3 +58,19 @@ class User(db.Model):
 
         u = self
         return f"<username={u.username} email={u.email} first name={u.first_name} last name={u.last_name}>"
+
+class Feedback(db.Model):
+    """model for individual Feedback"""
+
+    __tablename__ = "feedback"
+
+    id = db.Column(db.Integer, primary_key = True)
+    title = db.Column(db.String(100), nullable = False)
+    content = db.Column(db.Text, nullable = False)
+    username = db.Column(db.String, db.ForeignKey('users.username'), nullable=False)
+
+    def __repr__(self):
+        """Show info about Feedback"""
+
+        i = self
+        return f"<id={i.id} title={i.title} username={i.username}>"
