@@ -41,9 +41,9 @@ def register():
     form = RegisterUserForm()
     if form.validate_on_submit():
         data = {k: v for k, v in form.data.items() if k != "csrf_token"}
-        user = User(**data)
+        new_user = User.register(**data)
 
-        db.session.add(user)
+        db.session.add(new_user)
         db.session.commit()
         return redirect("/secret")
     return render_template("register.html", form=form)
