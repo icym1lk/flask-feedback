@@ -3,7 +3,7 @@ from flask import Flask, request, jsonify, render_template, redirect, flash, ses
 # get db related stuff from models.py
 from models import db, connect_db, User, Feedback
 # get forms from forms.py
-from forms import UserDetailsForm, LoginUserForm
+from forms import UserDetailsForm, LoginUserForm, AddFeedbackForm
 
 # instantiate and instance of Flask. app is standard name
 app = Flask(__name__)
@@ -60,7 +60,7 @@ def login():
 
     if "username" in session:
         return redirect(f'/users/{session["username"]}')
-        
+
     form = LoginUserForm()
     if form.validate_on_submit():
         data = {k: v for k, v in form.data.items() if k != "csrf_token"}
@@ -84,8 +84,9 @@ def user_details(username):
 
     
     user = User.query.filter_by(username=username).first()
-    form = UserDetailsForm(obj=user)
-    return render_template("user_details.html", form=form, user=user)
+    feedback = Feedback.query.filter_by(username=username)
+    form = AddFeedbackForm(obj=user)
+    return render_template("user_details.html", form=form, user=user, feedback=feedback)
 
 @app.route("/logout")
 def logout():
