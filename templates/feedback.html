@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Flask Feedback{% endblock %}
+
+{% block content %}
+
+<h1 class="display-1">Feedback Form</h1>
+<form>
+    {% include "_form.html" %}
+    <button class="btn btn-primary" formmethod="POST">Add</button>
+    <!-- <button class="btn btn-outline-secondary" formaction="/" formmethod="GET">Cancel</button> -->
+</form>
+
+{% endblock %}}

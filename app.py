@@ -100,6 +100,25 @@ def delete_user(username):
         session.pop("username")
         return redirect("/")
 
+@app.route("/users/<username>/feedback/add", methods=["GET", "POST"])
+def feedback_form(username):
+    """Form for users to add feeback"""
+
+    if "username" in session:
+        user = User.query.filter_by(username=username).first()
+        form = AddFeedbackForm()
+        if form.validate_on_submit():
+            title = form.title.data
+            content = form.content.data
+            feedback = Feedback(title=title, content=content, username=username)
+
+            db.session.add(feedback)
+            db.session.commit()
+            flash("Feedback submitted!", "success")
+            return redirect(f"/users/{user.username}")
+
+    return render_template("feedback.html", form=form)
+
 @app.route("/logout")
 def logout():
     flash(f'Goodbye {session["username"]}', "success")

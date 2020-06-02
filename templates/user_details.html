@@ -28,6 +28,14 @@
 </div>
 
 <h4 class="display-4">{{ user.username }} Feedback</h4>
+<span>
+    <form>
+        <button class="btn btn-primary btn-sm float-right" formaction="/users/{{ user.username }}/feedback/add" formmethod="GET">
+            New Feedback
+        </button>
+    </form>
+</span>
+<p class="lead">Here is all of the feeback you've given</p>
 <div class="user-info-container">
     <div class="row">
         {% for post in feedback %}
