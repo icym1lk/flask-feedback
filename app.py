@@ -3,7 +3,7 @@ from flask import Flask, request, jsonify, render_template, redirect, flash, ses
 # get db related stuff from models.py
 from models import db, connect_db, User, Feedback
 # get forms from forms.py
-from forms import UserDetailsForm, LoginUserForm, AddFeedbackForm
+from forms import UserDetailsForm, LoginUserForm, FeedbackForm
 
 # instantiate and instance of Flask. app is standard name
 app = Flask(__name__)
@@ -85,7 +85,7 @@ def user_details(username):
     
     user = User.query.filter_by(username=username).first()
     feedback = Feedback.query.filter_by(username=username)
-    form = AddFeedbackForm(obj=user)
+    form = FeedbackForm(obj=user)
     return render_template("user_details.html", form=form, user=user, feedback=feedback)
 
 @app.route("/users/<username>/delete", methods=["POST"])
@@ -106,7 +106,7 @@ def feedback_form(username):
 
     if "username" in session:
         user = User.query.filter_by(username=username).first()
-        form = AddFeedbackForm()
+        form = FeedbackForm()
         if form.validate_on_submit():
             title = form.title.data
             content = form.content.data
@@ -118,6 +118,23 @@ def feedback_form(username):
             return redirect(f"/users/{user.username}")
 
     return render_template("feedback.html", form=form)
+
+@app.route("/feedback/<int:feedback_id>/update", methods=["GET", "POST"])
+def feedback_details_form(feedback_id):
+
+    feedback = Feedback.query.get_or_404(feedback_id)
+    form = FeedbackForm(obj=feedback)
+
+    if form.validate_on_submit():
+        feedback.title = form.title.data
+        feedback.content = form.content.data
+        
+        db.session.add(feedback)
+        db.session.commit()
+        return redirect(f"/users/{feedback.user.username}")
+    else:
+        return render_template("feedback.html", form=form, feedback=feedback)
+
 
 @app.route("/logout")
 def logout():
