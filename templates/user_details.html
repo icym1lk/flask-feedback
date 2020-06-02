@@ -5,6 +5,13 @@
 {% block content %}
 
 <h1 class="display-1">Hello {{ user.username }}</h1>
+<span>
+    <form>
+        <button class="btn btn-danger btn-sm float-right" formaction="/users/{{ user.username }}/delete" formmethod="POST">
+            Delete Account
+        </button>
+    </form>
+</span>
 <p class="lead">Any of this info interest you?</p>
 <div class="user-info-container" display="flex-row">
     <div class="row justify-content-med-space-around">

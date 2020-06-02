@@ -88,6 +88,18 @@ def user_details(username):
     form = AddFeedbackForm(obj=user)
     return render_template("user_details.html", form=form, user=user, feedback=feedback)
 
+@app.route("/users/<username>/delete", methods=["POST"])
+def delete_user(username):
+
+    if "username" in session:
+        user = User.query.filter_by(username=username).first()
+
+        db.session.delete(user)
+        db.session.commit()
+        flash(f'{session["username"]} deleted.', "success")
+        session.pop("username")
+        return redirect("/")
+
 @app.route("/logout")
 def logout():
     flash(f'Goodbye {session["username"]}', "success")
