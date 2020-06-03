@@ -104,6 +104,10 @@ def delete_user(username):
 def feedback_form(username):
     """Form for users to add feeback"""
 
+    if "username" not in session:
+        flash("Please log in first.", "info")
+        return redirect("/login")
+
     if "username" in session:
         user = User.query.filter_by(username=username).first()
         form = FeedbackForm()
@@ -121,6 +125,11 @@ def feedback_form(username):
 
 @app.route("/feedback/<int:feedback_id>/update", methods=["GET", "POST"])
 def feedback_details_form(feedback_id):
+    """Form to post feeback"""
+
+    if "username" not in session:
+        flash("Please log in first.", "info")
+        return redirect("/login")
 
     feedback = Feedback.query.get_or_404(feedback_id)
     form = FeedbackForm(obj=feedback)
@@ -135,6 +144,22 @@ def feedback_details_form(feedback_id):
     else:
         return render_template("feedback.html", form=form, feedback=feedback)
 
+@app.route("/feedback/<int:feedback_id>/delete", methods=["POST"])
+def delete_feedback(feedback_id):
+    """Delete current user feeback"""
+
+    if "username" not in session:
+        flash("Please log in first.", "info")
+        return redirect("/login")
+
+    feedback = Feedback.query.get_or_404(feedback_id)
+    if feedback.user.username == session["username"]:
+        db.session.delete(feedback)
+        db.session.commit()
+        flash("Feedback deleted.", "success")
+        return redirect(f"/users/{feedback.user.username}")
+    flash("You don't have permission to do that!", "error")
+    return redirect(f"/users/{feedback.user.username}")
 
 @app.route("/logout")
 def logout():
