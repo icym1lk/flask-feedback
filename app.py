@@ -4,6 +4,7 @@ from flask import Flask, request, jsonify, render_template, redirect, flash, ses
 from models import db, connect_db, User, Feedback
 # get forms from forms.py
 from forms import UserDetailsForm, LoginUserForm, FeedbackForm
+from sqlalchemy.exc import IntegrityError
 
 # instantiate and instance of Flask. app is standard name
 app = Flask(__name__)
@@ -47,7 +48,11 @@ def register():
         new_user = User.register(**data)
 
         db.session.add(new_user)
-        db.session.commit()
+        try:
+            db.session.commit()
+        except IntegrityError:
+            form.username.errors.append("Username taken. Please pick another.")
+            return render_template("register.html", form=form)
         session["username"] = new_user.username
         flash("Welcome! Your account was successfully created!", "success")
         return redirect(f"/users/{new_user.username}")
