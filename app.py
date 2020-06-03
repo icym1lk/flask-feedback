@@ -67,7 +67,7 @@ def login():
         user = User.authenticate(**data)
 
         if user:
-            flash(f"Welcome back {user.username}!", "success")
+            flash(f"Welcome back {user.username}!", "info")
             session["username"] = user.username
             return redirect(f"/users/{user.username}")
         else:
@@ -79,7 +79,7 @@ def login():
 def user_details(username):
 
     if "username" not in session:
-        flash("Please log in first.", "info")
+        flash("Please log in first.", "primary")
         return redirect("/login")
 
     
@@ -90,6 +90,10 @@ def user_details(username):
 
 @app.route("/users/<username>/delete", methods=["POST"])
 def delete_user(username):
+
+    if "username" not in session:
+        flash("Please log in first.", "primary")
+        return redirect("/login")
 
     if "username" in session:
         user = User.query.filter_by(username=username).first()
@@ -105,7 +109,7 @@ def feedback_form(username):
     """Form for users to add feeback"""
 
     if "username" not in session:
-        flash("Please log in first.", "info")
+        flash("Please log in first.", "primary")
         return redirect("/login")
 
     if "username" in session:
@@ -128,7 +132,7 @@ def feedback_details_form(feedback_id):
     """Form to post feeback"""
 
     if "username" not in session:
-        flash("Please log in first.", "info")
+        flash("Please log in first.", "primary")
         return redirect("/login")
 
     feedback = Feedback.query.get_or_404(feedback_id)
@@ -149,7 +153,7 @@ def delete_feedback(feedback_id):
     """Delete current user feeback"""
 
     if "username" not in session:
-        flash("Please log in first.", "info")
+        flash("Please log in first.", "primary")
         return redirect("/login")
 
     feedback = Feedback.query.get_or_404(feedback_id)
@@ -163,6 +167,6 @@ def delete_feedback(feedback_id):
 
 @app.route("/logout")
 def logout():
-    flash(f'Goodbye {session["username"]}', "success")
+    flash(f'Goodbye {session["username"]}', "info")
     session.pop("username")
     return redirect("/")
